@@ -22,9 +22,13 @@ export class DetailComposentComponent implements OnInit {
     const pokemonId: number | null = +this.route.snapshot.paramMap.get("pokemonId")!;
     
     this.pokemon = this.pokemonService.getPokemonByID(pokemonId); 
+  
   }
 
   goBack(): void {
     this.router.navigate(["/pokemons"]);
+  }
+  goToEditPokemon(id: number){
+    this.router.navigate(['/pokemon/edit', id])
   }
 }

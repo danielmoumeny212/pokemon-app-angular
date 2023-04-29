@@ -5,6 +5,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { PokemonModule } from "./pokemon/pokemon.module";
+import { FormsModule } from "@angular/forms";
 
 /**
  *  un composant ne peux être definir dans plusieurs module pareil pour les directives et les pipes
@@ -15,8 +16,10 @@ import { PokemonModule } from "./pokemon/pokemon.module";
   declarations: [AppComponent, PageNotFoundComponent],
   imports: [
     BrowserModule,
+    FormsModule,
     PokemonModule,
     AppRoutingModule, 
+
     ],
   providers: [],
   bootstrap: [AppComponent],
