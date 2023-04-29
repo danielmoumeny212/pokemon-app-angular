@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Pokemon } from '../pokemon';
 import { POKEMONS } from '../mock-pokemon-list';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-list-pokemon',
@@ -9,25 +12,14 @@ import { POKEMONS } from '../mock-pokemon-list';
 export class ListPokemonComponent {
   pokemonList: Pokemon[] = POKEMONS;
 
-  pokemonSelected: Pokemon | undefined;
+  constructor(private router:Router){
 
-
-
-  selectPokemon(pokemonId: string) {
-    const pokemon: Pokemon | undefined = this.pokemonList.find(
-      (p) => p.id === +pokemonId
-    );
-    if (pokemon) {
-      this.pokemonSelected = pokemon;
-    } else {
-      this.pokemonSelected = pokemon;
-      console.log(`Vous avez demandé un pokemon qui n'existe pas `);
-    }
-
-    console.log(
-      `vous avez cliqué sur le pokemon ${this.pokemonList[+pokemonId].name}`
-    );
   }
+  
+  goToPokemon(pokemon: Pokemon){
+     this.router.navigate(['/pokemon', pokemon.id])
+  }
+  
 }
 
 
