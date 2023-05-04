@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class PokemonFormComponent implements OnInit{
 
   types: string[];
+  
   @Input()
   pokemon: Pokemon; 
 
