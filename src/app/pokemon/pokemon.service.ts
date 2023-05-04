@@ -9,6 +9,7 @@ import { Observable, catchError, of, tap } from "rxjs";
 // puis on ajoute le service en question dans le module concernée ici le module pokemon
 export class PokemonService {
   constructor(private http: HttpClient) {}
+  
   getPokemonList(): Observable<Pokemon[]> {
     return this.http.get<Pokemon[]>("/api/pokemons").pipe(
       tap((pokemonList) => this.log(pokemonList)),
@@ -31,21 +32,32 @@ export class PokemonService {
     console.log(error);
     return of(errorValue);
   }
-  updatePokemon(pokemon: Pokemon): Observable<null>{
+  updatePokemon(pokemon: Pokemon): Observable<null> {
     const httpOptions = {
-      headers: new HttpHeaders({'content-type': 'application/json'})
-    }; 
-    return this.http.put<Pokemon>('api/pokemons', pokemon, httpOptions).pipe(
+      headers: new HttpHeaders({ "content-type": "application/json" }),
+    };
+    return this.http.put<Pokemon>("api/pokemons", pokemon, httpOptions).pipe(
       tap((response) => this.log(response)),
-      catchError((error) => this.handleError(error,null))
+      catchError((error) => this.handleError(error, null))
     );
   }
   deletePokemonById(pokemonId: number): Observable<null> {
     return this.http.delete(`/api/pokemons/${pokemonId}`).pipe(
-      tap((response ) => this.log(response)),
+      tap((response) => this.log(response)),
       catchError((error) => this.handleError(error, null))
-    )
+    );
   }
+  
+  addPokemon(pokemon: Pokemon): Observable<Pokemon> {
+    const httpOptions = {
+      headers: new HttpHeaders({ "content-type": "application/json" }),
+    };
+    return this.http.post<Pokemon>("api/pokemons/", pokemon, httpOptions).pipe(
+      tap((response) => this.log(response)),
+      catchError((error) => this.handleError(error, null))
+    );
+  }
+
   getPokemonTypeList(): string[] {
     return [
       "Plante",

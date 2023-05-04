@@ -1,38 +1,34 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { PokemonService } from '../pokemon.service';
-import { Pokemon } from 'src/app/pokemon';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input } from "@angular/core";
+import { PokemonService } from "../pokemon.service";
+import { Pokemon } from "src/app/pokemon";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-pokemon-form',
-  templateUrl: './pokemon-form.component.html',
-  styleUrls: [
-    './pokemon-form.component.css',
-  ]
-  
+  selector: "app-pokemon-form",
+  templateUrl: "./pokemon-form.component.html",
+  styleUrls: ["./pokemon-form.component.css"],
 })
-export class PokemonFormComponent implements OnInit{
-
+export class PokemonFormComponent implements OnInit {
   types: string[];
-  
+  isAddForm: boolean;
+
   @Input()
-  pokemon: Pokemon; 
+  pokemon: Pokemon;
 
-  constructor(private pokemonService: PokemonService, private router: Router){}
+  constructor(private pokemonService: PokemonService, private router: Router) {}
   ngOnInit(): void {
-    this.types =  this.pokemonService.getPokemonTypeList(); 
-      
+    this.types = this.pokemonService.getPokemonTypeList();
+    this.isAddForm = this.router.url.includes("add");
   }
 
-  hasType(type: string): boolean{
-    return this.pokemon.types.includes(type); 
-
+  hasType(type: string): boolean {
+    return this.pokemon.types.includes(type);
   }
 
-  selectType($event: Event, type: string){
-    const isChecked = ($event.target as HTMLInputElement).checked; 
+  selectType($event: Event, type: string) {
+    const isChecked = ($event.target as HTMLInputElement).checked;
 
-    if (isChecked){
+    if (isChecked) {
       this.pokemon.types.push(type);
     } else {
       const index = this.pokemon.types.indexOf(type);
@@ -40,19 +36,26 @@ export class PokemonFormComponent implements OnInit{
     }
   }
 
-  isTypesValid(type: string): boolean{
-     if(this.pokemon.types.length == 1 && this.hasType(type)){
-       return false; 
-     }
-     if(this.pokemon.types.length > 2 && !this.hasType(type)){
-       return false; 
-     }
+  isTypesValid(type: string): boolean {
+    if (this.pokemon.types.length == 1 && this.hasType(type)) {
+      return false;
+    }
+    if (this.pokemon.types.length > 2 && !this.hasType(type)) {
+      return false;
+    }
 
-     return true 
+    return true;
   }
 
-  onSubmit(){
-      this.pokemonService.updatePokemon(this.pokemon)
-      .subscribe(() => this.router.navigate(['/pokemon', this.pokemon.id]));
+  onSubmit() {
+    if (this.isAddForm) {
+      this.pokemonService
+        .addPokemon(this.pokemon)
+        .subscribe((pokemon) => this.router.navigate(["/pokemon", pokemon.id]));
+      return;
+    }
+    this.pokemonService
+      .updatePokemon(this.pokemon)
+      .subscribe(() => this.router.navigate(["/pokemon", this.pokemon.id]));
   }
 }
