@@ -8,6 +8,7 @@ import { PokemonModule } from "./pokemon/pokemon.module";
 import { FormsModule } from "@angular/forms";
 import { HttpClientInMemoryWebApiModule } from "angular-in-memory-web-api";
 import { InMemoryDataService } from "./in-memory-data.service";
+import { LoginComponent } from './login/login.component';
 
 /**
  *  un composant ne peux être definir dans plusieurs module pareil pour les directives et les pipes
@@ -15,7 +16,7 @@ import { InMemoryDataService } from "./in-memory-data.service";
  */
 
 @NgModule({
-  declarations: [AppComponent, PageNotFoundComponent],
+  declarations: [AppComponent, PageNotFoundComponent, LoginComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
