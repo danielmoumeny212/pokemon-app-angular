@@ -18,6 +18,7 @@ const pokemonRoutes: Routes = [
   {
     path: 'pokemon/add',
     component: AddPokemonComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: "pokemon/edit/:pokemonId",
@@ -27,11 +28,13 @@ const pokemonRoutes: Routes = [
   {
     path: "pokemon/:pokemonId",
     component: DetailComposentComponent,
+    canActivate: [AuthGuard],
   },
   
   {
     path: "pokemons",
     component: ListPokemonComponent,
+    canActivate: [AuthGuard],
   },
   
 ];
